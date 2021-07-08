@@ -8,17 +8,18 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 
 public class Calculator {
-    private Handler mHandler;
+    private static Handler mHandler;
     private static int mSpeed = 0;
     private float mDistance = 0;
     private Context mContext;
     private static float timer;
     private static DecimalFormat df = new DecimalFormat("0.0");
+    private static Runnable runnable;
 
     public Calculator(Context context){
         mContext = context;
         mHandler = new Handler();
-        Runnable runnable = new Runnable() {
+        runnable = new Runnable() {
             @Override
             public void run() {
                 TextView textView = (TextView) ((Activity)mContext).findViewById(R.id.main_distance);
@@ -37,6 +38,8 @@ public class Calculator {
 
     public static void updateSpeed(int speed){
         mSpeed = speed;
+        mHandler.removeCallbacks(runnable);
+        mHandler.post(runnable);
         if(speed != 0){
             timer = 360/mSpeed;
         }
