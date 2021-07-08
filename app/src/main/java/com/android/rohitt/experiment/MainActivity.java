@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.EmptyStackException;
 
 public class MainActivity extends AppCompatActivity {
     private EditText mSpeedEditText;
@@ -31,7 +34,29 @@ public class MainActivity extends AppCompatActivity {
         mCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calculator.updateSpeed(Integer.parseInt(mSpeedEditText.getText().toString()));
+
+                try{
+                    String s = mSpeedEditText.getText().toString();
+                    if(s.isEmpty()){
+                        Toast.makeText(getApplicationContext(), "enter a valid speed in kmph", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        int val = Integer.parseInt(s);
+                        if(val < 0){
+                            Toast.makeText(getApplicationContext(), "speed cannot be negative", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Calculator.updateSpeed(val);
+                        }
+
+                    }
+
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getApplicationContext(), "engine turned off due to over speeding", Toast.LENGTH_SHORT).show();
+                    Calculator.updateSpeed(0);
+                }
+
+
             }
         });
 

@@ -27,6 +27,9 @@ public class Calculator {
                 if(mSpeed != 0){
                     mDistance = mDistance+0.1f;
                 }
+                else{
+                    mDistance = mDistance;
+                }
             }
         };
         mHandler.post(runnable);
@@ -34,7 +37,10 @@ public class Calculator {
 
     public static void updateSpeed(int speed){
         mSpeed = speed;
-        timer = 360/mSpeed;
+        if(speed != 0){
+            timer = 360/mSpeed;
+        }
+
     }
 
     public float getmDistance(){
