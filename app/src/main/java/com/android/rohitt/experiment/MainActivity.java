@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
                         if(val < 0){
                             Toast.makeText(getApplicationContext(), "speed cannot be negative", Toast.LENGTH_SHORT).show();
                         }
+                        else if(val > 360){
+                            Toast.makeText(getApplicationContext(), "engine turned off due to over speeding", Toast.LENGTH_SHORT).show();
+                            Calculator.updateSpeed(0);
+                        }
                         else{
                             Calculator.updateSpeed(val);
                         }
